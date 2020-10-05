@@ -1,7 +1,29 @@
-pipeline:
-  build:
+---
+kind: pipeline
+type: test
+name: test
+
+steps:
+  - name: tests
     image: node:latest
-    commands: npm install
-  test:
-    image: node:latest
-    commands: npm run test
+    commands:
+    - npm install
+  - name: say-hi
+    commands:
+    - echo OI
+---
+kind: pipeline
+type: deployment
+name: production
+
+steps:
+    - name: say_hi
+      commands:
+      - echo "DEPLOY TO PRODUCTION"
+
+trigger:
+  event:
+  - promote
+  branches:
+  - production
+
